@@ -256,7 +256,7 @@ void setup()
 	digitalWrite(LED_3, LOW);
 	///test
 	
-	Serial.print("Hello world.");
+	//Serial.print("Hello world.");
 	// Initialize CC1101
 	somfy.beginCC1101(CC1101_TxPower_Plus7dBm);
 	// initialisation du rolling code
@@ -319,10 +319,10 @@ void loop()
 			writeEeprom ++;
 			if (writeEeprom == 1) 
 			{
-			EEPROM.put(EEPROM_ADDRESS[counter - 1], MyRolingCode[counter - 1]);
-			
-			if (writeEeprom >= writeEepromStep) {writeEeprom = 0;}
+				EEPROM.put(EEPROM_ADDRESS[counter - 1], MyRolingCode[counter - 1]);
 			}
+			if (writeEeprom >= writeEepromStep) {writeEeprom = 0;}
+			
 						
 		}
 		else if (input_Prog) {
@@ -376,7 +376,7 @@ void loop()
 		else if (input_My) {
 			meminput_My[counter] = 0;
 		}
-		Serial.println(counter);
+		
 		switch (counter) 
 		{
 			
@@ -456,31 +456,60 @@ void receive(const MyMessage &message)
 				{
 					somfy.somfy_rts_func(SomfyCmd_Prog, MyRolingCode[i],REMOTE_CONTROL_ADRESS[i]);
 					MyRolingCode[i]++;
+
+					writeEeprom ++;
+					if (writeEeprom == 1) 
+					{
+						EEPROM.put(EEPROM_ADDRESS[i], MyRolingCode[i]);
+					}
+					if (writeEeprom >= writeEepromStep) {writeEeprom = 0;}
+				
+
 					break;
 				}
 				
 				case V_UP:
 				{
 					somfy.somfy_rts_func(SomfyCmd_Up, MyRolingCode[i],REMOTE_CONTROL_ADRESS[i]);
-					Serial.println("UP");
+					
 					MyRolingCode[i]++;
-				break;
+
+					writeEeprom ++;
+					if (writeEeprom == 1) 
+					{
+						EEPROM.put(EEPROM_ADDRESS[i], MyRolingCode[i]);
+					}
+					if (writeEeprom >= writeEepromStep) {writeEeprom = 0;}
+
+					break;
 				}
 				case V_DOWN:
 				{
 					somfy.somfy_rts_func(SomfyCmd_Down, MyRolingCode[i],REMOTE_CONTROL_ADRESS[i]);
 					MyRolingCode[i]++;
+					writeEeprom ++;
+					if (writeEeprom == 1) 
+					{
+						EEPROM.put(EEPROM_ADDRESS[i], MyRolingCode[i]);
+					}
+					if (writeEeprom >= writeEepromStep) {writeEeprom = 0;}					
 					break;
 				}
 				case V_STOP:
 				{
 					somfy.somfy_rts_func(SomfyCmd_My, MyRolingCode[i],REMOTE_CONTROL_ADRESS[i]);
 					MyRolingCode[i]++;
+					writeEeprom ++;
+					if (writeEeprom == 1) 
+					{
+						EEPROM.put(EEPROM_ADDRESS[i], MyRolingCode[i]);
+					}
+					if (writeEeprom >= writeEepromStep) {writeEeprom = 0;}							
 					break;
 				} 
 				case V_SCENE_ON:
 				{
-					Serial.println("Scene");
+					
 					somfy.somfy_rts_func(SomfyCmd_Down, MyRolingCode[i],REMOTE_CONTROL_ADRESS[i]);
 					MyRolingCode[i]++;
 					delay(15000);
@@ -490,7 +519,12 @@ void receive(const MyMessage &message)
 					somfy.somfy_rts_func(SomfyCmd_My, MyRolingCode[i],REMOTE_CONTROL_ADRESS[i]);
 
 					MyRolingCode[i]++;
-					
+					writeEeprom ++;
+					if (writeEeprom == 1) 
+					{
+						EEPROM.put(EEPROM_ADDRESS[i], MyRolingCode[i]);
+					}
+					if (writeEeprom >= writeEepromStep) {writeEeprom = 0;}							
 					
 					break;
 				}   
