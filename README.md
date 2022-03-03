@@ -1,6 +1,6 @@
 # Somfy-RTS-Mysensors-7telecommandes
 
-https://www.jeedom.com/forum/viewtopic.php?t=21456 page 6
+https://forum.jeedom.com/viewtopic.php?f=35&t=21456&sid=17a3918acb8bd854341d4dc58d9f23e7&start=100#p627808 page 6
 
 cd Somfy-RTS-Mysensors-7telecommandes
 
